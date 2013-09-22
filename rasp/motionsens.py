@@ -9,9 +9,9 @@ def get_filelist(mypath):
     return onlyfiles
 
 if __name__ == '__main__':
-    #mypath = '/home/suhaim/.motion'
+    mypath = '/home/suhaim/.motion'
     host = 'http://192.168.236.162:5000/'
-    mypath = '/users/nico/__scratch'
+   # mypath = '/users/nico/__scratch'
     onlyfiles = get_filelist(mypath)
     initial_no_of_files = len(onlyfiles)
     while True:
