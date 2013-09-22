@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+
+<script>
+	$(document).ready(function(){
+		hideAllPrecipitationPics();
+		changePrecipitationPic("0");
+	});
+	function changePrecipitationPic(value) {
+		hideAllPrecipitationPics();
+		$('#' + value.replace('.', '\\.')).show();	
+	}
+
+	function hideAllPrecipitationPics(){
+		$('.precipitationPic').hide();
+	}
+</script>
+
 <html>
   <head>
     <title>dryRun</title>
@@ -6,7 +24,7 @@
   <body>
     <h1>Alarm Clock</h1>
 
-    <form>
+    <form action="" method="POST">
 	Alarm:	
 	<select name="runTimeHour">
 		<option value='1'>1</option>
@@ -92,7 +110,7 @@
 	<br>
 
 	Only wake me if it's (at worst):
-	<select name='precipitationThreshold'>
+	<select name='precipitationThreshold' onchange="changePrecipitationPic(this.value)">
 		<option value='0'>Not Raining</option>
 		<option value='0.002'>Sprinkling</option>
 		<option value='0.017'>Light Showers</option>
@@ -101,7 +119,12 @@
 		<option value='1'>Always wake me</option>
 	</select><br>
 	<br>	
-
+	<div class="precipitationPic" id="0"><img src="" />Not Raining</div>
+	<div class="precipitationPic" id="0.002"><img src="" />Sprinkling</div>
+	<div class="precipitationPic" id="0.017"><img src="" />Light Showers</div>
+	<div class="precipitationPic" id="0.1"><img src="" />Medium Showers</div>
+	<div class="precipitationPic" id="0.4"><img src="" />Heavy Rain</div>
+	<div class="precipitationPic" id="1"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQY90jv8OdQy3aXgTth35qNrY6bQbvDaX-fObYNWRaVEGPd-920tA" /></div>
 	otherwise, let me sleep until:
 	<select name="sleepinTimeHour">
 		<option value='1'>1</option>
@@ -193,11 +216,17 @@
 	<br>
 	<div>
 		<h3>Existing Alarms</h3>
-		<table>
-			<tr>
-				<td><a href="">Example (Click to edit)</a></td>
-			</tr>
-		</table>
+
+		<script Language="javascript">
+
+			document.write("<ul>");
+			// substitute existing alarms in here
+			for(i = 0; i < 3; i++){
+				document.write('<li><a href="">' + i + '</a></li>');	
+			}
+			document.write("</ul>");
+		</script>
+
 	</div>
 
   </body>
