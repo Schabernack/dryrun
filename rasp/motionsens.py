@@ -3,12 +3,14 @@
 from os import listdir
 from os.path import isfile, join
 import urllib2
+import requests
 
 def get_filelist(mypath):
     onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
     return onlyfiles
 
 if __name__ == '__main__':
+    s = requests.Session()
     mypath = '/home/suhaim/.motion'
     host = 'http://192.168.236.162:5000/'
    # mypath = '/users/nico/__scratch'
@@ -20,7 +22,8 @@ if __name__ == '__main__':
         print('files: ' + str(file_no))
         if file_no > initial_no_of_files:
             print("Sent stopmusic command")
-            urllib2.urlopen(host + 'stopmusic')
+            #urllib2.urlopen(host + 'stopmusic')
+            s.get(host + 'stopmusic')
             initial_no_of_files = file_no
             print('new initial: ' + str(initial_no_of_files))
 
