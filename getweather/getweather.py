@@ -8,6 +8,6 @@ weather = json.load(urllib2.urlopen("http://ec2-184-72-208-140.compute-1.amazona
 precipIntensity = weather['precipIntensity']
 
 if precipIntensity == (int(setPrecipIntensity)): 
-  print("Wake up for a dry run!")
+  print("Wake up for a dry run")
 else:
   print("Sleep in as it is wet")
