@@ -63,7 +63,9 @@
   (let [port (if (first args)
                (Integer/parseInt (first args))
                8080)
-        mode :dev]
+        mode (if (second args)
+               (keyword (second args))
+               :dev)]
     (log/info "Running server on port:" port)
     (run-server (if (= mode :dev)
                   (reload/wrap-reload #'handler)
