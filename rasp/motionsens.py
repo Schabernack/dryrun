@@ -17,6 +17,7 @@ if __name__ == '__main__':
     while True:
         file_no = len(get_filelist(mypath))
         if file_no > initial_no_of_files:
+            print("Sent stopmusic command")
             urllib2.urlopen(host + 'stopmusic')
             initial_no_of_files = file_no
 
