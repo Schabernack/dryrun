@@ -14,18 +14,6 @@
             [compojure.core :refer :all])
   (:gen-class))
 
-(def api-key "b316d8b6c6d7e1abd39ad2df3bd03119")
-
-(defn generate-url [api-key lat long]
-  (format "https://api.forecast.io/forecast/%s/%s,%s" api-key lat long))
-
-(defn weather-at-point [lat long]
-  (let [raw (client/get (generate-url api-key long lat))]
-    (-> raw
-        :body
-        (parse-string true)
-        :currently)))
-
 (defn response
   [body & {:keys [status headers]
            :or {status 200 headers {}}}]
@@ -45,9 +33,10 @@
          (response {:error "Unknown Error"} :status 500)))))
 
 (defroutes app
-  (GET "/" {params :query-params}
-    (json-wrapper
-     (weather-at-point (params "lat") (params "long") )))
+  #_ (GET "/" {params :query-params}
+       (json-wrapper
+        (weather-at-point (params "lat") (or (params "lng")
+                                             (params "long")) )))
   (POST "/alarms" req
     (let [alarm-spec (:body req)]
       (log/info "Creating alarm")
@@ -64,6 +53,10 @@
       (log/info "Updating alarm id:" id)
       (json-wrapper
        (alarms/update-alarm id (:body req)))))
+  (GET "/alarms/:id/status" [id]
+    (log/info "Getting alarm status" id)
+    (json-wrapper
+     (alarms/get-alarm-status (Long/parseLong id))))
   (route/not-found "<h1>Page not found</h1>"))
 
 (def handler (-> app
