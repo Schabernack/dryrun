@@ -10,10 +10,12 @@ app = Flask(__name__)
 @app.route('/startmusic')
 def start_music():
     pygame.mixer.music.play()
+    return 200
 
 @app.route('/stopmusic')
 def stop_music():
     pygame.mixer.music.stop()
+    return 200
 
 
 if __name__=='__main__':
