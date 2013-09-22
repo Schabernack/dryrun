@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+from os import listdir
+from os.path import isfile, join
+import urllib2
+
+
+if __name__ == '__main__':
+    mypath = '/home/suhaim/.motion'
+    host = 'http://192.168.236.162:5000/'
+    #mypath = '/users/nico/__scratch'
+    onlyfiles = get_filelist(mypath)
+    initial_no_of_files = len(onlyfiles)
+    while True:
+        file_no = len(get_filelist(mypath))
+        if file_no > initial_no_of_files:
+            urllib2.urlopen(host + 'stopmusic')
+            initial_no_of_files = file_no
+
+def get_filelist(mypath):
+    onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+    
