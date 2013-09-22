@@ -4,6 +4,8 @@ from os import listdir
 from os.path import isfile, join
 import urllib2
 
+def get_filelist(mypath):
+    onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
 
 if __name__ == '__main__':
     mypath = '/home/suhaim/.motion'
@@ -17,6 +19,4 @@ if __name__ == '__main__':
             urllib2.urlopen(host + 'stopmusic')
             initial_no_of_files = file_no
 
-def get_filelist(mypath):
-    onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
     
