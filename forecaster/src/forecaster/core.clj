@@ -1,6 +1,7 @@
 (ns forecaster.core
   (:require [clojure.tools.logging :as log]
             [ring.middleware
+             [reload :as reload]
              [params :refer [wrap-params]]
              [json :refer [wrap-json-body wrap-json-response]]]
             [compojure
@@ -12,13 +13,13 @@
             [compojure.core :refer :all])
   (:gen-class))
 
-(def token "b316d8b6c6d7e1abd39ad2df3bd03119")
+(def api-key "b316d8b6c6d7e1abd39ad2df3bd03119")
 
-(defn generate-url [token lat long]
-  (format "https://api.forecast.io/forecast/%s/%s,%s" token lat long))
+(defn generate-url [api-key lat long]
+  (format "https://api.forecast.io/forecast/%s/%s,%s" api-key lat long))
 
 (defn weather-at-point [lat long]
-  (let [raw (client/get (generate-url token long lat))]
+  (let [raw (client/get (generate-url api-key long lat))]
     (-> raw
         :body
         (parse-string true)
@@ -44,7 +45,6 @@
 
 (defroutes app
   (GET "/" {params :query-params}
-    (log/info (pr-str params))
     (json-wrapper
      (weather-at-point (params "lat") (params "long") )))
   (route/not-found "<h1>Page not found</h1>"))
@@ -55,6 +55,11 @@
                  (wrap-json-body {:keywords? true})))
 
 (defn -main [& args]
-  (let [port 8080]
+  (let [port (if (first args)
+               (Integer/parseInt (first args))
+               8080)
+        mode :dev]
     (log/info "Running server on port:" port)
-    (run-server handler {:port port})))
+    (run-server (if (= mode :dev)
+                  (reload/wrap-reload #'handler)
+                  handler) {:port port})))
