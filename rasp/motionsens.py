@@ -4,7 +4,6 @@ from os import listdir
 from os.path import isfile, join
 import urllib2
 import requests
-from requests import async
 
 def get_filelist(mypath):
     onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
@@ -23,8 +22,10 @@ if __name__ == '__main__':
         print('files: ' + str(file_no))
         if file_no > initial_no_of_files:
             print("Sent stopmusic command")
-            #urllib2.urlopen(host + 'stopmusic')
-            async.get(host + 'stopmusic')
+            try:
+              urllib2.urlopen(host + 'stopmusic',timeout=5)
+            except:
+              pass
             initial_no_of_files = file_no
             print('new initial: ' + str(initial_no_of_files))
 
