@@ -50,8 +50,20 @@
      (weather-at-point (params "lat") (params "long") )))
   (POST "/alarms" req
     (let [alarm-spec (:body req)]
-     (json-wrapper
-      (alarms/create-alarm alarm-spec))))
+      (log/info "Creating alarm")
+      (json-wrapper
+       (alarms/create-alarm alarm-spec))))
+  (GET "/alarms/:id" [id]
+    (log/info "Getting alarm id:" id)
+    (let [alarm (alarms/get-alarm (Long/parseLong id))]
+      (if-not (empty? alarm)
+        (json-wrapper alarm)
+        (route/not-found "<h1>Page not found</h1>"))))
+  (PUT "/alarms/:id" [id :as req]
+    (let [id (Long/parseLong id)]
+      (log/info "Updating alarm id:" id)
+      (json-wrapper
+       (alarms/update-alarm id (:body req)))))
   (route/not-found "<h1>Page not found</h1>"))
 
 (def handler (-> app
