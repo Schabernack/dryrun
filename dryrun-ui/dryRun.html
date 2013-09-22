@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -78,23 +79,33 @@ function deleteOverlays() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-
-<html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build on top of Pure.">
+    <title>Dry Run</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="./baby-blue.css">
     <link href="./default.css" rel="stylesheet">
-    <title>dryRun</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <h1>Alarm Clock</h1>
-
+    <div class="pure-g-r" id="layout">
+      <div class="pure-u-1" id="main">
+        <div class="header">
+          <h1>DryRun</h1>
+        </div>
+        <div class="content">
+          <div>
     Mark your morning run (click on the map to add markers):
-	<div id="panel">
+	<div id="panel"> 
       <input onclick="clearOverlays();" type=button value="Hide Overlays">
       <input onclick="showOverlays();" type=button value="Show All Overlays">
       <input onclick="deleteOverlays();" type=button value="Delete Overlays">
     </div>
-    <div id="map-canvas"></div>
-
+    <div id="map-canvas" style="height:500px"></div>
+</div>
     <form action="" method="POST">
 	Alarm:	
 	<select name="runTimeHour">
@@ -300,7 +311,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
 
 	</div>
-
+      </div>
+    </div>
+    <script src="./rainbow-min.js"></script>
   </body>
 </html>
-

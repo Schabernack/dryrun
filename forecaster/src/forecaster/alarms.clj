@@ -1,5 +1,7 @@
 (ns forecaster.alarms
-  (:require [clojure.data :refer [diff]])
+  (:require [clojure.data :refer [diff]]
+            [forecaster.fetcher :as f]
+            [clojure.tools.logging :as log])
   (:import java.util.concurrent.atomic.AtomicLong))
 
 (defonce alarms (atom {}))
@@ -7,10 +9,14 @@
 (defonce counter ^AtomicLong (AtomicLong. 0))
 
 (defn create-alarm [alarm]
-  (let [alarm (select-keys alarm [:alarm :alternate :precip-intensity])
+  (let [alarm (select-keys alarm [:alarm :alternate :precip-intensity :coordinates])
+        alarm (if-not (coll? (:coordinates alarm))
+                (assoc alarm :coordinates (keep identity [(:coordinates alarm)]))
+                alarm)
         id (.getAndIncrement counter)]
     (swap! alarms assoc id (-> alarm
                                (assoc :id id)))
+    (f/fetch-forecast-for-coordinate alarms (get @alarms id))
     (get @alarms id {:error "Unable to create alarm"})))
 
 (defn update-alarm [id new-alarm]
@@ -27,3 +33,7 @@
 
 (defn delete-alarm [id]
   (swap! alarms dissoc id))
+
+(defn get-alarm-status [id]
+  {:status :ok})
+
