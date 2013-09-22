@@ -17,7 +17,7 @@ def stop_music():
 
 
 if __name__=='__main__':
-    app.run(debug = True, host = "0.0.0.0")
     pygame.mixer.init()
     pygame.mixer.music.load("clouds.mp3")
+    app.run(debug = True, host = "0.0.0.0")
 
