@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+
+<script>
+	$(document).ready(function(){
+
+		$("#markers").hide();
+		hideAllPrecipitationPics();
+		changePrecipitationPic("0");
+	});
+	function changePrecipitationPic(value) {
+		hideAllPrecipitationPics();
+		$('#' + value.replace('.', '\\.')).show();	
+	}
+
+	function hideAllPrecipitationPics(){
+		$('.precipitationPic').hide();
+	}
+</script>
+
+<script>
+var map;
+var markers = [];
+
+function initialize() {
+  var fredericton = new google.maps.LatLng(45.9635895, -66.6431150);
+  var mapOptions = {
+    zoom: 13,
+    center: fredericton,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  google.maps.event.addListener(map, 'click', function(event) {
+    addMarker(event.latLng);
+  });
+}
+
+// Add a marker to the map and push to the array.
+function addMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+  markers.push(marker);
+
+  for (var i = 0; i < markers.length; i++) {
+  $("#markers").val($("#markers").val() + markers[i].getPosition().lat() + "," + markers[i].getPosition().lng() + ";");
+  }
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the overlays from the map, but keeps them in the array.
+function clearOverlays() {
+  setAllMap(null);
+}
+
+// Shows any overlays currently in the array.
+function showOverlays() {
+  setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteOverlays() {
+  clearOverlays();
+  markers = [];
+  $("#markers").val("");
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build on top of Pure.">
+    <title>Dry Run</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="./baby-blue.css">
+    <link href="./default.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="pure-g-r" id="layout">
+      <div class="pure-u-1" id="main">
+        <div class="header">
+          <h1>DryRun</h1>
+        </div>
+        <div class="content">
+          <div>
+    Mark your morning run (click on the map to add markers):
+	<div id="panel"> 
+      <input onclick="clearOverlays();" type=button value="Hide Overlays">
+      <input onclick="showOverlays();" type=button value="Show All Overlays">
+      <input onclick="deleteOverlays();" type=button value="Delete Overlays">
+    </div>
+    <div id="map-canvas" style="height:500px"></div>
+</div>
+          <p/>
+    <form id="hi" class="pure-form pure-form-aligned" action="/alarms" method="POST">
+	<fieldset>
+	<div class="pure-control-group">
+		<label for="runTimeHour">Alarm</label>
+	<select name="runTimeHour">
+		<option value='1'>1</option>
+		<option value='2'>2</option>
+		<option value='3'>3</option>
+		<option value='4'>4</option>
+		<option value='5'>5</option>
+		<option value='6'>6</option>
+		<option value='7'>7</option>
+		<option value='8'>8</option>
+		<option value='9'>9</option>
+		<option value='10'>10</option>
+		<option value='11'>11</option>
+		<option value='12'>12</option>
+	</select>
+	:
+	<select name="runTimeMinute">
+		<option value='0'>00</option>
+		<option value='1'>01</option>
+		<option value='2'>02</option>
+		<option value='3'>03</option>
+		<option value='4'>04</option>
+		<option value='5'>05</option>
+		<option value='6'>06</option>
+		<option value='7'>07</option>
+		<option value='8'>08</option>
+		<option value='9'>09</option>
+		<option value='10'>10</option>
+		<option value='11'>11</option>
+		<option value='12'>12</option>
+		<option value='13'>13</option>
+		<option value='14'>14</option>
+		<option value='15'>15</option>
+		<option value='16'>16</option>
+		<option value='17'>17</option>
+		<option value='18'>18</option>
+		<option value='19'>19</option>
+		<option value='20'>20</option>
+		<option value='21'>21</option>
+		<option value='22'>22</option>
+		<option value='23'>23</option>
+		<option value='24'>24</option>
+		<option value='25'>25</option>
+		<option value='26'>26</option>
+		<option value='27'>27</option>
+		<option value='28'>28</option>
+		<option value='29'>29</option>
+		<option value='30'>30</option>
+		<option value='31'>31</option>
+		<option value='32'>32</option>
+		<option value='33'>33</option>
+		<option value='34'>34</option>
+		<option value='35'>35</option>
+		<option value='36'>36</option>
+		<option value='37'>37</option>
+		<option value='38'>38</option>
+		<option value='39'>39</option>
+		<option value='40'>40</option>
+		<option value='41'>41</option>
+		<option value='42'>42</option>
+		<option value='43'>43</option>
+		<option value='44'>44</option>
+		<option value='45'>45</option>
+		<option value='46'>46</option>
+		<option value='47'>47</option>
+		<option value='48'>48</option>
+		<option value='49'>49</option>
+		<option value='50'>50</option>
+		<option value='51'>51</option>
+		<option value='52'>52</option>
+		<option value='53'>53</option>
+		<option value='54'>54</option>
+		<option value='55'>55</option>
+		<option value='56'>56</option>
+		<option value='57'>57</option>
+		<option value='58'>58</option>
+		<option value='59'>59</option>
+	</select>
+	<select name="runTimeAMPM">
+		<option value='AM'>AM</option>
+		<option value='PM'>PM</option>
+	</select>
+	</div>
+	<br>
+
+	<div class="pure-control-group">
+		<label for="precipitationThreshold">wake me if it's (at worst)</label>
+	<select name='precipitationThreshold' onchange="changePrecipitationPic(this.value)">
+		<option value='0'>Not Raining</option>
+		<option value='0.002'>Sprinkling</option>
+		<option value='0.017'>Light Showers</option>
+		<option value='0.1'>Medium Showers</option>
+		<option value='0.4'>Heavy Rain</option>
+		<option value='1'>Always wake me</option>
+	</select>
+	</div>
+
+	<div class="precipitationPic" id="0"><img src="" />Not Raining</div>
+	<div class="precipitationPic" id="0.002"><img src="" />Sprinkling</div>
+	<div class="precipitationPic" id="0.017"><img src="" />Light Showers</div>
+	<div class="precipitationPic" id="0.1"><img src="" />Medium Showers</div>
+	<div class="precipitationPic" id="0.4"><img src="" />Heavy Rain</div>
+	<div class="precipitationPic" id="1"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQY90jv8OdQy3aXgTth35qNrY6bQbvDaX-fObYNWRaVEGPd-920tA" /></div>
+	<div class="pure-control-group">
+		<label for="sleepinTimeHour">otherwise, let me sleep until</label>
+	<select name="sleepinTimeHour">
+		<option value='1'>1</option>
+		<option value='2'>2</option>
+		<option value='3'>3</option>
+		<option value='4'>4</option>
+		<option value='5'>5</option>
+		<option value='6'>6</option>
+		<option value='7'>7</option>
+		<option value='8'>8</option>
+		<option value='9'>9</option>
+		<option value='10'>10</option>
+		<option value='11'>11</option>
+		<option value='12'>12</option>
+	</select>
+	:
+	<select name="sleepinTimeMinute">
+		<option value='0'>00</option>
+		<option value='1'>01</option>
+		<option value='2'>02</option>
+		<option value='3'>03</option>
+		<option value='4'>04</option>
+		<option value='5'>05</option>
+		<option value='6'>06</option>
+		<option value='7'>07</option>
+		<option value='8'>08</option>
+		<option value='9'>09</option>
+		<option value='10'>10</option>
+		<option value='11'>11</option>
+		<option value='12'>12</option>
+		<option value='13'>13</option>
+		<option value='14'>14</option>
+		<option value='15'>15</option>
+		<option value='16'>16</option>
+		<option value='17'>17</option>
+		<option value='18'>18</option>
+		<option value='19'>19</option>
+		<option value='20'>20</option>
+		<option value='21'>21</option>
+		<option value='22'>22</option>
+		<option value='23'>23</option>
+		<option value='24'>24</option>
+		<option value='25'>25</option>
+		<option value='26'>26</option>
+		<option value='27'>27</option>
+		<option value='28'>28</option>
+		<option value='29'>29</option>
+		<option value='30'>30</option>
+		<option value='31'>31</option>
+		<option value='32'>32</option>
+		<option value='33'>33</option>
+		<option value='34'>34</option>
+		<option value='35'>35</option>
+		<option value='36'>36</option>
+		<option value='37'>37</option>
+		<option value='38'>38</option>
+		<option value='39'>39</option>
+		<option value='40'>40</option>
+		<option value='41'>41</option>
+		<option value='42'>42</option>
+		<option value='43'>43</option>
+		<option value='44'>44</option>
+		<option value='45'>45</option>
+		<option value='46'>46</option>
+		<option value='47'>47</option>
+		<option value='48'>48</option>
+		<option value='49'>49</option>
+		<option value='50'>50</option>
+		<option value='51'>51</option>
+		<option value='52'>52</option>
+		<option value='53'>53</option>
+		<option value='54'>54</option>
+		<option value='55'>55</option>
+		<option value='56'>56</option>
+		<option value='57'>57</option>
+		<option value='58'>58</option>
+		<option value='59'>59</option>
+	</select>
+	<select name="sleepinTimeAMPM">
+		<option value='AM'>AM</option>
+		<option value='PM'>PM</option>
+	</select>
+	</div>
+
+	<input type="text" id="markers" name="markers">
+        <p/>
+	<button type="button" class="pure-button pure-button-primary">Submit</button>	
+	</fieldset>
+    </form>
+
+	<br>
+	<br>
+	<div id="result"/>
+	<h3>Existing Alarms</h3>
+
+        <script>
+          $( "#hi" ).click(function( event ) {
+          console.log("asdfasfd")
+          event.preventDefault();
+          var $form = $( this );
+          var $runTimeHour = $('select[name=runTimeHour]').val();
+          var $runTimeMinute = $('select[name=runTimeMinute]').val();
+          var $runTimeAMPM = $('select[name=runTimeAMPM]').val();
+
+          var $threshold = $('select[name=precipitationThreshold]').val();
+
+          var $sleepinTimeHour = $('select[name=sleepinTimeHour]').val();
+          var $sleepinTimeMinute = $('select[name=sleepinTimeMinute]').val();
+          var $sleepinTimeAMPM = $('select[name=sleepinTimeAMPM]').val();
+
+          var tbird = {
+          "alarm" : $runTimeHour + ":" + $runTimeMinute + $runTimeAMPM,
+          "alternate" : $sleepinTimeHour + ":" + $sleepinTimeMinute + $sleepinTimeAMPM,
+          "precip-intensity" : Number($threshold)
+          };
+
+          console.log(tbird);
+          url = $form.attr( "action" );
+          var posting = $.ajax({
+          type: "POST",
+          url: url,
+          data: JSON.stringify(tbird),
+          contentType: "application/json",
+          dataType: "json",
+          });
+          
+          posting.done(function( data ) {
+          var content = $( data ).find( "#content" );
+          $( "#result" ).empty().append( content );
+          });
+          });
+        </script>
+	</div>
+      </div>
+    </div>
+    <script src="./rainbow-min.js"></script>
+  </body>
+</html>

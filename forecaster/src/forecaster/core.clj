@@ -33,15 +33,15 @@
          (response {:error "Unknown Error"} :status 500)))))
 
 (defroutes app
-  #_ (GET "/" {params :query-params}
-       (json-wrapper
-        (weather-at-point (params "lat") (or (params "lng")
-                                             (params "long")) )))
   (POST "/alarms" req
     (let [alarm-spec (:body req)]
       (log/info "Creating alarm")
       (json-wrapper
        (alarms/create-alarm alarm-spec))))
+  (POST "/alarms2" req
+    (log/info "****" (pr-str req))
+    (json-wrapper
+     {:asfd "asfd"}))
   (GET "/alarms/:id" [id]
     (log/info "Getting alarm id:" id)
     (let [alarm (alarms/get-alarm (Long/parseLong id))]
@@ -57,6 +57,7 @@
     (log/info "Getting alarm status" id)
     (json-wrapper
      (alarms/get-alarm-status (Long/parseLong id))))
+  (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))
 
 (def handler (-> app
