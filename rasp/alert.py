@@ -1,15 +1,20 @@
 #!/usr/bin/python
 
-import pyaudio, audioop, numpy, pprint
+import pyaudio, audioop, numpy, pprint, urllib2
 
 chunk = 1024
 rate = 44100
 
 def main():
+    hostname = 'http://192.168.236.162:5000/'
     while True:
+        if trigger():
+            print("STOPMUSIC sent")
+            urllib2.urlopen(hostname + 'stopmusic')
         trigger()
 
 def trigger():
+    triggered = False
     foo = record_sample()
     average_loud = sum(foo)/len(foo)
     print("AVERAGE: "+str(average_loud))
@@ -20,8 +25,8 @@ def trigger():
             frame = foo[idx:idx+5]
             #print(frame)
             if all(val > average_loud*3 for val in frame):
-                print("TRIGGERED")
-
+                triggered = True
+    return triggered
 
 def record_sample(seconds_to_record = 2):
     audio_rms = []
