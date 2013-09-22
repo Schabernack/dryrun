@@ -199,7 +199,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 	<div class="pure-control-group">
 		<label for="precipitationThreshold">wake me if it's (at worst)</label>
-	<select name='precipitationThreshold' onchange="changePrecipitationPic(this.value)">
+	<select name='precipitationThreshold' onchange="changePrecipitationPic(this.value)" >
 		<option value='0'>Not Raining</option>
 		<option value='0.002'>Sprinkling</option>
 		<option value='0.017'>Light Showers</option>
@@ -209,12 +209,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</select>
 	</div>
 
-	<div class="precipitationPic" id="0"><img src="" />Not Raining</div>
-	<div class="precipitationPic" id="0.002"><img src="" />Sprinkling</div>
-	<div class="precipitationPic" id="0.017"><img src="" />Light Showers</div>
-	<div class="precipitationPic" id="0.1"><img src="" />Medium Showers</div>
-	<div class="precipitationPic" id="0.4"><img src="" />Heavy Rain</div>
-	<div class="precipitationPic" id="1"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQY90jv8OdQy3aXgTth35qNrY6bQbvDaX-fObYNWRaVEGPd-920tA" /></div>
+	<div class="precipitationPic" id="0"><img src="http://www.runnerspace.com/members/images/110/6747_full.jpg" width="200" height="200"/></div>
+	<div class="precipitationPic" id="0.002"><img src="http://4.bp.blogspot.com/-iuUncKC8HSk/Uhle2S6mFjI/AAAAAAAAGt4/uI8i6gdwIig/s640/6BB21966-20F6-4196-98FA-3CBDF1977FE1.MOV" width="200" height="200" /></div>
+	<div class="precipitationPic" id="0.017"><img src="http://www.catsncats.com/galleries/cat-under-umbrella-in-the-rain.gif" width="200" height="200" /></div>
+	<div class="precipitationPic" id="0.1"><img src="http://24.media.tumblr.com/tumblr_m4xldlLOYZ1qj2u1wo1_500.jpg" width="200" height="200" /></div>
+	<div class="precipitationPic" id="0.4"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQF4HZmJgbVEGZ8kV3KqYImjJbdtrsVNygBeGQpmh80UBWo21Li" width="200" height="200" /></div>
+	<div class="precipitationPic" id="1"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQY90jv8OdQy3aXgTth35qNrY6bQbvDaX-fObYNWRaVEGPd-920tA" width="200" height="200" /></div>
 	<div class="pure-control-group">
 		<label for="sleepinTimeHour">otherwise, let me sleep until</label>
 	<select name="sleepinTimeHour">
