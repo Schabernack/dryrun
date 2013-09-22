@@ -11,6 +11,7 @@
                  [compojure "1.1.5" :exclusions [clout]]
                  [clout "1.1.0"]
                  [http-kit "2.1.10"]
+                 [clj-time "0.6.0"]
                  [org.slf4j/slf4j-log4j12 "1.7.5"]
                  [org.clojure/tools.logging "0.2.6"]]
   :aot :all

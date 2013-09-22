@@ -1,5 +1,6 @@
 (ns forecaster.core
   (:require [clojure.tools.logging :as log]
+            [forecaster.alarms :as alarms]
             [ring.middleware
              [reload :as reload]
              [params :refer [wrap-params]]
@@ -47,6 +48,10 @@
   (GET "/" {params :query-params}
     (json-wrapper
      (weather-at-point (params "lat") (params "long") )))
+  (POST "/alarms" req
+    (let [alarm-spec (:body req)]
+     (json-wrapper
+      (alarms/create-alarm alarm-spec))))
   (route/not-found "<h1>Page not found</h1>"))
 
 (def handler (-> app
