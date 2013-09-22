@@ -15,4 +15,5 @@
                  [org.slf4j/slf4j-log4j12 "1.7.5"]
                  [org.clojure/tools.logging "0.2.6"]]
   :aot :all
+  :uberjar-name "forecaster.jar"
   :main forecaster.core)
