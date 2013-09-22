@@ -26,5 +26,5 @@
                               (assoc :lat lat)
                               (assoc :lng lng)))]
             (log/info "Results for fetch:" (pr-str results))
-            (swap! world assoc-in [id :forecast] results)
+            (swap! world assoc-in [id :forecasts] results)
             (log/info "World:" (pr-str @world)))))

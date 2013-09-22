@@ -37,3 +37,9 @@
 (defn get-alarm-status [id]
   {:status :ok})
 
+(defn fire-alarm? [id]
+  (let [alarm (get-alarm id)
+        forecasts (:forecasts alarm)
+        results (for [forecast forecasts]
+                  (> (:precipProbability forecast) 0))]
+    (some identity results)))
