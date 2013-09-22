@@ -28,7 +28,7 @@ def record_sample(seconds_to_record = 2):
     p = pyaudio.PyAudio()
 
 
-    stream = p.open(format=pyaudio.paInt16,
+    stream = p.open(format=pyaudio.paInt8,
             channels=1,
             rate=rate,
             input=True,
