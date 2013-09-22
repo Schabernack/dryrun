@@ -3,6 +3,7 @@
   <head>
     <title>DryRun</title>
     <link href="./default.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
 var map;
@@ -30,6 +31,10 @@ function addMarker(location) {
     map: map
   });
   markers.push(marker);
+
+  for (var i = 0; i < markers.length; i++) {
+  $("#markers").val($("#markers").val() + markers[i].getPosition().lat() + "," + markers[i].getPosition().lng() + ";");
+  }
 }
 
 // Sets the map on all markers in the array.
@@ -53,6 +58,7 @@ function showOverlays() {
 function deleteOverlays() {
   clearOverlays();
   markers = [];
+  $("#markers").val("");
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -67,5 +73,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </div>
     <div id="map-canvas"></div>
     <p>Click on the map to add markers.</p>
+
+
+	<form>
+		<input type="text" id="markers" name="markers">
+		<input type="submit" value="Done">
+	</form>
   </body>
 </html>

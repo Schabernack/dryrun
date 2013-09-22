@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
 
 <script>
 	$(document).ready(function(){
@@ -17,12 +19,81 @@
 	}
 </script>
 
+<script>
+var map;
+var markers = [];
+
+function initialize() {
+  var fredericton = new google.maps.LatLng(45.9635895, -66.6431150);
+  var mapOptions = {
+    zoom: 13,
+    center: fredericton,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  google.maps.event.addListener(map, 'click', function(event) {
+    addMarker(event.latLng);
+  });
+}
+
+// Add a marker to the map and push to the array.
+function addMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+  markers.push(marker);
+
+  for (var i = 0; i < markers.length; i++) {
+  $("#markers").val($("#markers").val() + markers[i].getPosition().lat() + "," + markers[i].getPosition().lng() + ";");
+  }
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the overlays from the map, but keeps them in the array.
+function clearOverlays() {
+  setAllMap(null);
+}
+
+// Shows any overlays currently in the array.
+function showOverlays() {
+  setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteOverlays() {
+  clearOverlays();
+  markers = [];
+  $("#markers").val("");
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
 <html>
   <head>
+    <link href="./default.css" rel="stylesheet">
     <title>dryRun</title>
   </head>
   <body>
     <h1>Alarm Clock</h1>
+
+    Mark your morning run (click on the map to add markers):
+	<div id="panel">
+      <input onclick="clearOverlays();" type=button value="Hide Overlays">
+      <input onclick="showOverlays();" type=button value="Show All Overlays">
+      <input onclick="deleteOverlays();" type=button value="Delete Overlays">
+    </div>
+    <div id="map-canvas"></div>
 
     <form action="" method="POST">
 	Alarm:	
@@ -209,6 +280,7 @@
 	</select>
 	<br>
 
+	<input hidden="true" type="text" id="markers" name="markers">
 	<input type="submit" value="Set Alarm">
 
     </form>
